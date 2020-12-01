@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+}
+body {
+  display: flex;
+  justify-content: center;
+}
+#board {
+  width: 360px;
+  height: 360px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 300px;
+}
+
+.button {
+  width: 60px;
+  height: 30px;
+}
