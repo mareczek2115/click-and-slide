@@ -1,5 +1,7 @@
 let tilesTable = [];
 let currentImageName = 'cat.jpg';
+let currentSize = 3;
+let isShuffliong;
 
 const board = document.createElement('div');
 board.id = 'board';
@@ -72,9 +74,6 @@ for (let i = 3; i < 7; i++) {
   button.classList.add('button');
   button.innerText = `${i}x${i}`;
   button.onclick = function () {
-    tilesTable = [];
-    board.innerHTML = '';
-    divideImage(i, currentImageName);
     shuffle(i);
   };
   buttons.appendChild(button);
@@ -82,6 +81,8 @@ for (let i = 3; i < 7; i++) {
 
 //dzielenie obrazka
 function divideImage(size, imageName) {
+  tilesTable = [];
+  board.innerHTML = '';
   for (let i = 0; i < size + 2; i++) {
     let row = [];
     for (let j = 0; j < size + 2; j++) {
@@ -145,6 +146,7 @@ let prevDirection = undefined;
 
 //mieszanie puzzli
 function shuffle(size) {
+  divideImage(size, currentImageName);
   function moveTile(size) {
     let tile = Math.ceil(Math.random() * size * size);
     while (size === 3 && tile === 9) {
@@ -192,8 +194,12 @@ function shuffle(size) {
   }
 
   let counter = 0;
-  while (counter < 100) {
+  let shuffling = setInterval(() => {
     moveTile(size);
     if (wasMoved) counter++;
-  }
+    if (counter === 70) {
+      console.log(tilesTable);
+      clearInterval(shuffling);
+    }
+  }, 15);
 }
