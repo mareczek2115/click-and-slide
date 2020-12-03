@@ -41,11 +41,13 @@ body {
   margin-top: 10px;
 }
 
-div i {
+.tile {
+  position: absolute;
   cursor: pointer;
 }
 
-.tile {
-  position: absolute;
+.arrow {
+  width: 40px;
+  height: 70px;
   cursor: pointer;
 }

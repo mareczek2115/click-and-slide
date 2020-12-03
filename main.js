@@ -7,8 +7,8 @@ board.id = 'board';
 //slider
 const imageChoice = document.createElement('div');
 const img = document.createElement('img');
-const arrowLeft = document.createElement('i');
-const arrowRight = document.createElement('i');
+const arrowLeft = document.createElement('img');
+const arrowRight = document.createElement('img');
 let whichPhoto = 1;
 imageChoice.id = 'image-choice';
 img.src = './cat.jpg';
@@ -56,12 +56,10 @@ arrowRight.onclick = function () {
       break;
   }
 };
-arrowLeft.classList.add('fa');
-arrowLeft.classList.add('fa-angle-left');
-arrowLeft.classList.add('fa-5x');
-arrowRight.classList.add('fa');
-arrowRight.classList.add('fa-angle-right');
-arrowRight.classList.add('fa-5x');
+arrowLeft.src = './angle-left-solid.svg';
+arrowRight.src = './angle-right-solid.svg';
+arrowLeft.classList.add('arrow');
+arrowRight.classList.add('arrow');
 imageChoice.appendChild(arrowLeft);
 imageChoice.appendChild(img);
 imageChoice.appendChild(arrowRight);
