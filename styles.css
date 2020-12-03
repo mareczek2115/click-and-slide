@@ -4,13 +4,18 @@
 body {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 #board {
+  position: relative;
   width: 360px;
   height: 360px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  border: 1px solid black;
+  margin-top: 20px;
 }
 
 #buttons {
@@ -18,9 +23,29 @@ body {
   flex-direction: row;
   justify-content: space-evenly;
   width: 300px;
+  margin-top: 20px;
 }
 
 .button {
   width: 60px;
   height: 30px;
+}
+
+#image-choice {
+  height: 170px;
+  width: 320px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+}
+
+div i {
+  cursor: pointer;
+}
+
+.tile {
+  position: absolute;
+  cursor: pointer;
 }
