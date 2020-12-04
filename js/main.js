@@ -1,6 +1,7 @@
 let tilesTable = [];
 let currentImageName = 'cat.jpg';
 let currentSize = 3;
+let isShuffling = false;
 
 const board = document.createElement('div');
 board.id = 'board';
@@ -73,7 +74,7 @@ for (let i = 3; i < 7; i++) {
   button.classList.add('button');
   button.innerText = `${i}x${i}`;
   button.onclick = function () {
-    shuffle(i);
+    if (!isShuffling) shuffle(i);
   };
   buttons.appendChild(button);
 }
@@ -145,6 +146,7 @@ document.body.appendChild(board);
 
 //mieszanie puzzli
 function shuffle(size) {
+  isShuffling = true;
   let wasMoved = false;
   let prevDirection = undefined;
   divideImage(size, currentImageName);
@@ -198,11 +200,11 @@ function shuffle(size) {
   let shuffling = setInterval(() => {
     moveTile(size);
     if (wasMoved) counter++;
-    if (counter === 70) {
-      console.log(tilesTable);
+    if (counter === 80) {
+      isShuffling = false;
       clearInterval(shuffling);
     }
-  }, 10);
+  }, 1);
 }
 
 //sprawdzenie czy puzzle som ulozone
