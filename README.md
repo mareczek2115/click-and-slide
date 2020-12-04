@@ -1,1 +1,1 @@
-# Very simple Click & Slide game
+# Very simple Fifteen Puzzle Game game
