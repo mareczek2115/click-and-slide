@@ -1,7 +1,6 @@
 let tilesTable = [];
 let currentImageName = 'cat.jpg';
 let currentSize = 3;
-let isShuffliong;
 
 const board = document.createElement('div');
 board.id = 'board';
@@ -13,7 +12,7 @@ const arrowLeft = document.createElement('img');
 const arrowRight = document.createElement('img');
 let whichPhoto = 1;
 imageChoice.id = 'image-choice';
-img.src = './cat.jpg';
+img.src = './img/cat.jpg';
 img.style.width = '170px';
 img.style.height = '170px';
 arrowLeft.onclick = function () {
@@ -24,15 +23,15 @@ arrowLeft.onclick = function () {
   }
   switch (whichPhoto) {
     case 1:
-      img.src = './cat.jpg';
+      img.src = './img/cat.jpg';
       currentImageName = 'cat.jpg';
       break;
     case 2:
-      img.src = './mobbyn.png';
+      img.src = './img/mobbyn.png';
       currentImageName = 'mobbyn.png';
       break;
     case 3:
-      img.src = './graffiti.jpg';
+      img.src = './img/graffiti.jpg';
       currentImageName = 'graffiti.jpg';
       break;
   }
@@ -45,21 +44,21 @@ arrowRight.onclick = function () {
   }
   switch (whichPhoto) {
     case 1:
-      img.src = './cat.jpg';
+      img.src = './img/cat.jpg';
       currentImageName = 'cat.jpg';
       break;
     case 2:
-      img.src = './mobbyn.png';
+      img.src = './img/mobbyn.png';
       currentImageName = 'mobbyn.png';
       break;
     case 3:
-      img.src = './graffiti.jpg';
+      img.src = './img/graffiti.jpg';
       currentImageName = 'graffiti.jpg';
       break;
   }
 };
-arrowLeft.src = './angle-left-solid.svg';
-arrowRight.src = './angle-right-solid.svg';
+arrowLeft.src = './img/angle-left-solid.svg';
+arrowRight.src = './img/angle-right-solid.svg';
 arrowLeft.classList.add('arrow');
 arrowRight.classList.add('arrow');
 imageChoice.appendChild(arrowLeft);
@@ -202,4 +201,48 @@ function shuffle(size) {
       clearInterval(shuffling);
     }
   }, 15);
+}
+
+const chuj = 3;
+let kurwa = 1;
+for (let i = 1; i < chuj * chuj; i++) {
+  const left = parseInt(document.getElementById(`${kurwa}`).style.left);
+  const top = parseInt(document.getElementById(`${kurwa}`).style.top);
+  if (i < 4) {
+    if ((top = 360 / chuj)) {
+    }
+  } else if (i >= 4 && i < 7) {
+    if ((top = (360 / chuj) * 1)) {
+    }
+  } else if (i >= 7 && i < 10) {
+    if ((top = (360 / chuj) * 2)) {
+    }
+  } else if (i >= 10 && i < 13) {
+    if ((top = (360 / chuj) * 3)) {
+    }
+  } else if (i >= 13 && i < 16) {
+    if ((top = (360 / chuj) * 4)) {
+    }
+  } else if (i >= 16 && i < 19) {
+    if ((top = (360 / chuj) * 5)) {
+    }
+  } else if (i >= 19 && i < 22) {
+    if ((top = (360 / chuj) * 6)) {
+    }
+  } else if (i >= 22 && i < 25) {
+    if ((top = (360 / chuj) * 7)) {
+    }
+  } else if (i >= 25 && i < 28) {
+    if ((top = (360 / chuj) * 8)) {
+    }
+  } else if (i >= 28 && i < 31) {
+    if ((top = (360 / chuj) * 9)) {
+    }
+  } else if (i >= 31 && i < 34) {
+    if ((top = (360 / chuj) * 10)) {
+    }
+  } else if (i >= 34 && i < 36) {
+    if ((top = (360 / chuj) * 11)) {
+    }
+  }
 }
