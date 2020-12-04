@@ -100,7 +100,7 @@ function divideImage(size, imageName) {
         tile.classList.add('tile');
         tile.style.height = `${tileDimensions}px`;
         tile.style.width = `${tileDimensions}px`;
-        tile.style.backgroundImage = `url('${imageName}')`;
+        tile.style.backgroundImage = `url('img/${imageName}')`;
         tile.style.backgroundPositionX = `-${j * tileDimensions}px`;
         tile.style.backgroundPositionY = `-${i * tileDimensions}px`;
         tile.style.left = `${j * tileDimensions}px`;
@@ -127,6 +127,9 @@ function divideImage(size, imageName) {
             tilesTable[row][column] = 0;
             this.style.left = `${imgLeft + 360 / size}px`;
           }
+          if (tilesTable[size][size] === 0 && win(size)) {
+            alert('Ułożyłeś puzzle!');
+          }
         };
         tile.id = counter;
         counter++;
@@ -140,11 +143,10 @@ document.body.appendChild(imageChoice);
 document.body.appendChild(buttons);
 document.body.appendChild(board);
 
-let wasMoved = false;
-let prevDirection = undefined;
-
 //mieszanie puzzli
 function shuffle(size) {
+  let wasMoved = false;
+  let prevDirection = undefined;
   divideImage(size, currentImageName);
   function moveTile(size) {
     let tile = Math.ceil(Math.random() * size * size);
@@ -200,49 +202,30 @@ function shuffle(size) {
       console.log(tilesTable);
       clearInterval(shuffling);
     }
-  }, 15);
+  }, 10);
 }
 
-const chuj = 3;
-let kurwa = 1;
-for (let i = 1; i < chuj * chuj; i++) {
-  const left = parseInt(document.getElementById(`${kurwa}`).style.left);
-  const top = parseInt(document.getElementById(`${kurwa}`).style.top);
-  if (i < 4) {
-    if ((top = 360 / chuj)) {
-    }
-  } else if (i >= 4 && i < 7) {
-    if ((top = (360 / chuj) * 1)) {
-    }
-  } else if (i >= 7 && i < 10) {
-    if ((top = (360 / chuj) * 2)) {
-    }
-  } else if (i >= 10 && i < 13) {
-    if ((top = (360 / chuj) * 3)) {
-    }
-  } else if (i >= 13 && i < 16) {
-    if ((top = (360 / chuj) * 4)) {
-    }
-  } else if (i >= 16 && i < 19) {
-    if ((top = (360 / chuj) * 5)) {
-    }
-  } else if (i >= 19 && i < 22) {
-    if ((top = (360 / chuj) * 6)) {
-    }
-  } else if (i >= 22 && i < 25) {
-    if ((top = (360 / chuj) * 7)) {
-    }
-  } else if (i >= 25 && i < 28) {
-    if ((top = (360 / chuj) * 8)) {
-    }
-  } else if (i >= 28 && i < 31) {
-    if ((top = (360 / chuj) * 9)) {
-    }
-  } else if (i >= 31 && i < 34) {
-    if ((top = (360 / chuj) * 10)) {
-    }
-  } else if (i >= 34 && i < 36) {
-    if ((top = (360 / chuj) * 11)) {
+//sprawdzenie czy puzzle som ulozone
+function win(size) {
+  let id = 1;
+  let isOkay = [];
+  for (let row = 0; row < size; row++) {
+    for (let column = 0; column < size; column++) {
+      if (id !== size * size) {
+        const left = parseInt(document.getElementById(`${id}`).style.left);
+        const top = parseInt(document.getElementById(`${id}`).style.top);
+        if (left === (360 / size) * column && top === (360 / size) * row)
+          isOkay.push(true);
+        else isOkay.push(false);
+      }
+      id++;
     }
   }
+  if (
+    isOkay.every(element => {
+      return element === true;
+    })
+  )
+    return true;
+  else return false;
 }
