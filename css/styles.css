@@ -6,6 +6,7 @@ body {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
 #board {
   position: relative;
@@ -50,4 +51,9 @@ body {
   width: 40px;
   height: 70px;
   cursor: pointer;
+}
+
+#img {
+  width: 170px;
+  height: 170px;
 }

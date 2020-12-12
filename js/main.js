@@ -1,83 +1,92 @@
 let tilesTable = [];
+
 let currentImageName = 'cat.jpg';
-let currentSize = 3;
 let isShuffling = false;
 
 const board = document.createElement('div');
 board.id = 'board';
 
-//slider
-const imageChoice = document.createElement('div');
-const img = document.createElement('img');
-const arrowLeft = document.createElement('img');
-const arrowRight = document.createElement('img');
-let whichPhoto = 1;
-imageChoice.id = 'image-choice';
-img.src = './img/cat.jpg';
-img.style.width = '170px';
-img.style.height = '170px';
-arrowLeft.onclick = function () {
-  if (whichPhoto === 1) {
-    whichPhoto = 3;
-  } else {
-    whichPhoto--;
-  }
-  switch (whichPhoto) {
-    case 1:
-      img.src = './img/cat.jpg';
-      currentImageName = 'cat.jpg';
-      break;
-    case 2:
-      img.src = './img/mobbyn.png';
-      currentImageName = 'mobbyn.png';
-      break;
-    case 3:
-      img.src = './img/graffiti.jpg';
-      currentImageName = 'graffiti.jpg';
-      break;
-  }
-};
-arrowRight.onclick = function () {
-  if (whichPhoto === 3) {
-    whichPhoto = 1;
-  } else {
-    whichPhoto++;
-  }
-  switch (whichPhoto) {
-    case 1:
-      img.src = './img/cat.jpg';
-      currentImageName = 'cat.jpg';
-      break;
-    case 2:
-      img.src = './img/mobbyn.png';
-      currentImageName = 'mobbyn.png';
-      break;
-    case 3:
-      img.src = './img/graffiti.jpg';
-      currentImageName = 'graffiti.jpg';
-      break;
-  }
-};
-arrowLeft.src = './img/angle-left-solid.svg';
-arrowRight.src = './img/angle-right-solid.svg';
-arrowLeft.classList.add('arrow');
-arrowRight.classList.add('arrow');
-imageChoice.appendChild(arrowLeft);
-imageChoice.appendChild(img);
-imageChoice.appendChild(arrowRight);
+//zmienne do timera
+let start = new Date();
+let milliseconds = 0;
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+let t;
 
-//przyciski z wymiarami
-const buttons = document.createElement('div');
-buttons.id = 'buttons';
-for (let i = 3; i < 7; i++) {
-  const button = document.createElement('button');
-  button.classList.add('button');
-  button.innerText = `${i}x${i}`;
-  button.onclick = function () {
-    if (!isShuffling) shuffle(i);
-  };
-  buttons.appendChild(button);
+//cookie
+document.cookie = `${document.cookie.split(' ').shift()} expires=${new Date(
+  Date.now() + 1000 * 60 * 60 * 24 * 365
+)};SameSite=None; Secure`;
+document.cookie = `${document.cookie.split(' ').pop()}; expires=${new Date(
+  Date.now() + 1000 * 60 * 60 * 24 * 365
+)};SameSite=None; Secure`;
+
+let topPlayers = document.cookie.split(' ').pop().split('=').pop().split(',');
+let topTimes = document.cookie.split(' ').shift().split('=').pop().split(',');
+topTimes[topTimes.length - 1] = topTimes[topTimes.length - 1].substr(
+  0,
+  topTimes[topTimes.length - 1].length - 1
+);
+if (document.cookie.split(' ').shift().split('=')[0] === 'TopPlayers') {
+  let temp = topTimes;
+  topTimes = topPlayers;
+  topPlayers = temp;
 }
+
+//TODO
+const arrowLeft = document.getElementById('arrow-left');
+let whichImage = 1;
+arrowLeft.onclick = function () {
+  if (whichImage === 1) {
+    whichImage = 3;
+  } else {
+    whichImage--;
+  }
+  switch (whichImage) {
+    case 1:
+      img.src = './img/cat.jpg';
+      currentImageName = 'cat.jpg';
+      break;
+    case 2:
+      img.src = './img/mobbyn.png';
+      currentImageName = 'mobbyn.png';
+      break;
+    case 3:
+      img.src = './img/graffiti.jpg';
+      currentImageName = 'graffiti.jpg';
+      break;
+  }
+};
+const arrowRight = document.getElementById('arrow-right');
+arrowRight.onclick = function () {
+  if (whichImage === 3) {
+    whichImage = 1;
+  } else {
+    whichImage++;
+  }
+  switch (whichImage) {
+    case 1:
+      img.src = './img/cat.jpg';
+      currentImageName = 'cat.jpg';
+      break;
+    case 2:
+      img.src = './img/mobbyn.png';
+      currentImageName = 'mobbyn.png';
+      break;
+    case 3:
+      img.src = './img/graffiti.jpg';
+      currentImageName = 'graffiti.jpg';
+      break;
+  }
+};
+const buttons = document.querySelectorAll('.button');
+buttons.forEach(button => {
+  button.onclick = function () {
+    if (!isShuffling) shuffle(parseInt(button.dataset.size));
+  };
+});
+//TODO
 
 //dzielenie obrazka
 function divideImage(size, imageName) {
@@ -129,7 +138,10 @@ function divideImage(size, imageName) {
             this.style.left = `${imgLeft + 360 / size}px`;
           }
           if (tilesTable[size][size] === 0 && win(size)) {
-            alert('Ułożyłeś puzzle!');
+            clearInterval(t);
+            alert(
+              `Ułożyłeś puzzle! Twój czas to ${hours}:${minutes}:${seconds}:${milliseconds}`
+            );
           }
         };
         tile.id = counter;
@@ -140,8 +152,6 @@ function divideImage(size, imageName) {
   }
 }
 
-document.body.appendChild(imageChoice);
-document.body.appendChild(buttons);
 document.body.appendChild(board);
 
 //mieszanie puzzli
@@ -203,9 +213,34 @@ function shuffle(size) {
     if (counter === 80) {
       isShuffling = false;
       clearInterval(shuffling);
+      t = setInterval(() => {
+        let now = new Date();
+        milliseconds = now.getTime() - start.getTime();
+        if (milliseconds > 1000) {
+          seconds++;
+          start = new Date();
+          now = new Date();
+          milliseconds = now.getTime() - start.getTime();
+        } else if (seconds == 60) {
+          minutes++;
+          seconds = 0;
+          start = new Date();
+          now = new Date();
+          milliseconds = now.getTime() - start.getTime();
+        } else if (minutes == 60) {
+          hours++;
+          minutes = 0;
+          seconds = 0;
+          start = new Date();
+          now = new Date();
+          milliseconds = now.getTime() - start.getTime();
+        }
+      }, 1);
     }
   }, 1);
 }
+
+//interwał z czasem
 
 //sprawdzenie czy puzzle som ulozone
 function win(size) {
