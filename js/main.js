@@ -15,26 +15,35 @@ let hours = 0;
 let t;
 
 //cookie
-document.cookie = `${document.cookie.split(' ').shift()} expires=${new Date(
-  Date.now() + 1000 * 60 * 60 * 24 * 365
-)};SameSite=None; Secure`;
-document.cookie = `${document.cookie.split(' ').pop()}; expires=${new Date(
-  Date.now() + 1000 * 60 * 60 * 24 * 365
-)};SameSite=None; Secure`;
+if (document.cookie !== '') {
+  document.cookie = `${document.cookie.split(' ').shift()} expires=${new Date(
+    Date.now() + 1000 * 60 * 60 * 24 * 365
+  )};SameSite=None; Secure`;
+  document.cookie = `${document.cookie.split(' ').pop()}; expires=${new Date(
+    Date.now() + 1000 * 60 * 60 * 24 * 365
+  )};SameSite=None; Secure`;
 
-let topPlayers = document.cookie.split(' ').pop().split('=').pop().split(',');
-let topTimes = document.cookie.split(' ').shift().split('=').pop().split(',');
-topTimes[topTimes.length - 1] = topTimes[topTimes.length - 1].substr(
-  0,
-  topTimes[topTimes.length - 1].length - 1
-);
-if (document.cookie.split(' ').shift().split('=')[0] === 'TopPlayers') {
-  let temp = topTimes;
-  topTimes = topPlayers;
-  topPlayers = temp;
+  let topPlayers = document.cookie.split(' ').pop().split('=').pop().split(',');
+  let topTimes = document.cookie.split(' ').shift().split('=').pop().split(',');
+  topTimes[topTimes.length - 1] = topTimes[topTimes.length - 1].substr(
+    0,
+    topTimes[topTimes.length - 1].length - 1
+  );
+  if (document.cookie.split(' ').shift().split('=')[0] === 'TopPlayers') {
+    let temp = topTimes;
+    topTimes = topPlayers;
+    topPlayers = temp;
+  }
+} else {
+  document.cookie = `TopPlayers=marek,krzysiek,piotrek,bartek; expires=${new Date(
+    Date.now() + 1000 * 60 * 60 * 24 * 365
+  )};SameSite=None; Secure`;
+  document.cookie = `TopTimes=0:10:000,0:11:000,0:12:000,0:13:000; expires=${new Date(
+    Date.now() + 1000 * 60 * 60 * 24 * 365
+  )};SameSite=None; Secure`;
 }
 
-//TODO
+//DOM onclick events
 const arrowLeft = document.getElementById('arrow-left');
 let whichImage = 1;
 arrowLeft.onclick = function () {
@@ -86,7 +95,6 @@ buttons.forEach(button => {
     if (!isShuffling) shuffle(parseInt(button.dataset.size));
   };
 });
-//TODO
 
 //dzielenie obrazka
 function divideImage(size, imageName) {
@@ -214,6 +222,7 @@ function shuffle(size) {
       isShuffling = false;
       clearInterval(shuffling);
       t = setInterval(() => {
+        const timer = document.getElementById('timer');
         let now = new Date();
         milliseconds = now.getTime() - start.getTime();
         if (milliseconds > 1000) {
@@ -235,14 +244,13 @@ function shuffle(size) {
           now = new Date();
           milliseconds = now.getTime() - start.getTime();
         }
+        timer.innerText = `${hours}:${minutes}:${seconds}:${milliseconds}`;
       }, 1);
     }
   }, 1);
 }
 
-//interwał z czasem
-
-//sprawdzenie czy puzzle som ulozone
+//sprawdzenie czy puzzle są ułożone
 function win(size) {
   let id = 1;
   let isOkay = [];
