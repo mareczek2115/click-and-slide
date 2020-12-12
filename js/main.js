@@ -92,7 +92,14 @@ arrowRight.onclick = function () {
 const buttons = document.querySelectorAll('.button');
 buttons.forEach(button => {
   button.onclick = function () {
-    if (!isShuffling) shuffle(parseInt(button.dataset.size));
+    if (!isShuffling) {
+      document.getElementById('timer').innerText = `0:0:0:000`;
+      milliseconds = 0;
+      seconds = 0;
+      minutes = 0;
+      hours = 0;
+      shuffle(parseInt(button.dataset.size));
+    }
   };
 });
 
