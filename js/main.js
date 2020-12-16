@@ -268,16 +268,15 @@ function shuffle(size) {
         timer.innerText = '';
         for (let i = 0; i < time.length; i++) {
           const img = document.createElement('img');
-          if (time[i] === ':') img.src = '../img/colon.png';
+          if (time[i] === ':') img.src = 'https://mareczek2115.github.io/click-and-slide/img/colon.png';
           else img.src = `https://mareczek2115.github.io/click-and-slide/img/${time[i]}.png`
-          //else img.src = `../img/${time[i]}.png`;
           timer.appendChild(img);
         }
         if (milliseconds < 10) {
           const lastChild = timer.lastChild;
           timer.removeChild(lastChild);
           const blank = document.createElement('img');
-          blank.src = '../img/0.png';
+          blank.src = 'https://mareczek2115.github.io/click-and-slide/img/0.png';
           timer.appendChild(blank);
           timer.appendChild(blank);
           timer.appendChild(lastChild);
@@ -285,7 +284,7 @@ function shuffle(size) {
           const lastChild = timer.lastChild;
           timer.removeChild(lastChild);
           const blank = document.createElement('img');
-          blank.src = '../img/0.png';
+          blank.src = 'https://mareczek2115.github.io/click-and-slide/img/0.png';
           timer.appendChild(blank);
           timer.appendChild(lastChild);
         }
