@@ -269,7 +269,8 @@ function shuffle(size) {
         for (let i = 0; i < time.length; i++) {
           const img = document.createElement('img');
           if (time[i] === ':') img.src = '../img/colon.png';
-          else img.src = `../img/${time[i]}.png`;
+          else img.src = `https://mareczek2115.github.io/click-and-slide/img/${time[i]}.png`
+          //else img.src = `../img/${time[i]}.png`;
           timer.appendChild(img);
         }
         if (milliseconds < 10) {
