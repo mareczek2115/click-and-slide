@@ -1,15 +1,27 @@
 let results = [];
-let temp = [];
 if (document.cookie !== '') {
-  let text = document.cookie.split(' ').sort();
-  text.forEach(el => {
+  let text = document.cookie.split(' ');
+  text = text.sort();
+  text.forEach((el, index) => {
     if (el.endsWith(';')) {
-      el = el.substr(0, el.length - 1);
+      text[index] = el.substr(0, el.length - 1);
     }
-    temp.push(el.split('=').pop());
   });
-  temp.forEach(el => {
-    results.push(el.split(','));
+  text.forEach(el => {
+    let temp = el.split('=');
+    temp = temp.splice(1);
+    if (temp.length > 1) {
+      temp.forEach((a, b) => {
+        if (temp[b + 1]) {
+          temp[b] = a.concat('=', temp[b + 1]);
+          temp.splice(b + 1, 1);
+        }
+      });
+    }
+    results.push(temp);
+  });
+  results.forEach((el, index) => {
+    results[index] = el[0].split(',');
   });
   results.forEach(el => {
     el.push([], []);
@@ -23,6 +35,13 @@ if (document.cookie !== '') {
   });
   results.forEach(el => {
     if (el[0] == '') el[0].splice(0, 1);
+  });
+  results.forEach(el => {
+    el[0].forEach((a, b) => {
+      el[0][b] = decodeURI(a);
+      el[0][b] = el[0][b].replace(/%2c/g, ',');
+      el[0][b] = el[0][b].replace(/%3a/g, ':');
+    });
   });
   let cookies = document.cookie.split(' ');
   cookies.forEach(el => {
